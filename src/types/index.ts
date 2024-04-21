@@ -3,20 +3,22 @@ export interface IProduct {
   description: string;
   image: string;
 	title: string;	
-	category: string;
+	category: CategoryOptions;
 	price: number | null;
+	isAddedToBasket?: boolean;
 }
 export interface ICatalogData {
 	catalog: IProduct[];
 }
 
 export interface IBasketData {
-	basket: IProductBasket[];
+	basket: ProductBasket[];
 }
 
-export type PaymentOptions = 'card' | 'cash';
+export type PaymentOptions = 'card' | 'cash' | '';
+export type CategoryOptions = |'софт-скил'	| 'другое' | 'дополнительное'	| 'кнопка'	| 'хард-скил';
 
-export type IProductBasket = Pick <IProduct,	'id' | 'title' | 'price'>;
+export type ProductBasket = Pick <IProduct,	'id' | 'title' | 'price' | 'isAddedToBasket'>;
 
 export interface IOrderContact {
 	phone: string;
@@ -34,6 +36,8 @@ export interface IOrder extends IOrderForm {
 	total: number;
 	items: string[];
 }
+
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
 
 export interface IOrderResult {
 	total: number;
