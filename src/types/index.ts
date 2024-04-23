@@ -1,11 +1,12 @@
 export interface IProduct {
 	id: string;
-  description: string;
-  image: string;
-	title: string;	
+	description: string;
+	image: string;
+	title: string;
 	category: CategoryOptions;
 	price: number | null;
 	isAddedToBasket?: boolean;
+	index: number;
 }
 export interface ICatalogData {
 	catalog: IProduct[];
@@ -16,9 +17,17 @@ export interface IBasketData {
 }
 
 export type PaymentOptions = 'card' | 'cash' | '';
-export type CategoryOptions = |'софт-скил'	| 'другое' | 'дополнительное'	| 'кнопка'	| 'хард-скил';
+export type CategoryOptions =
+	| 'софт-скил'
+	| 'другое'
+	| 'дополнительное'
+	| 'кнопка'
+	| 'хард-скил';
 
-export type ProductBasket = Pick <IProduct,	'id' | 'title' | 'price' | 'isAddedToBasket'>;
+export type ProductBasket = Pick<
+	IProduct,
+	'id' | 'title' | 'price' | 'index' | 'isAddedToBasket'
+>;
 
 export interface IOrderContact {
 	phone: string;

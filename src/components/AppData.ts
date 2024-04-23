@@ -1,4 +1,5 @@
 import { FormErrors, IBasketData, IOrder, IOrderForm, IProduct, PaymentOptions, ProductBasket } from "../types";
+import { emailRegex, phoneRegex } from "../utils/utils";
 import { Model } from "./base/Model";
 
 export class Catalog extends Model<IProduct> {
@@ -116,10 +117,14 @@ export class Order extends Model<IOrder> {
     const errors: typeof this.formErrors = {};
     if (!this.order.email) {
         errors.email = 'Необходимо указать email';
-    }
+    } else if (!emailRegex.test(this.order.email)) {
+			errors.email = 'Проверьте корректность введеного email';
+		}
     if (!this.order.phone) {
         errors.phone = 'Необходимо указать телефон';
-    }
+    }else if (!phoneRegex.test(this.order.phone)) {
+			errors.phone = 'Введите номер телефона в формате +7(ХХХ)ХХХ-ХХ-ХХ'; 
+		}
     this.formErrors = errors;
     this.events.emit('formErrors:change:Contact', this.formErrors);
     return Object.keys(errors).length === 0;

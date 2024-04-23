@@ -178,12 +178,13 @@ interface IProduct {
 	category: CategoryOptions;
 	price: number | null;
 	isAddedToBasket?: boolean;
+  index: number;
 }
 ``` 
 Конструктор класса: `constructor(blockName: string, container: HTMLElement, action?: IAction)`.
 В конструкторе принимает название блока (контейнера), сам контейнер и необязательный аргумент `action` для настройки действий.
 
-В конструкторе класса инициализируются: заголовок `_title`, цена `_price`, описание `_description`, изображение `_image`, категория `_category` и кнопка `_button`. Также происходит проверка наличия объекта `action`: в случае его наличия создается событие на кнопке, в противном случае событие присваивается блоку. Также с помощью методов `set` и `get` в классе осуществляется установка контента внутри блока. Метод `setCategoryColor` используется для определения цвета категории.
+В конструкторе класса инициализируются: заголовок `_title`, цена `_price`, описание `_description`, изображение `_image`, категория `_category`, кнопка `_button` и индекс `_index`. Также происходит проверка наличия объекта `action`: в случае его наличия создается событие на кнопке, в противном случае событие присваивается блоку. Также с помощью методов `set` и `get` в классе осуществляется установка контента внутри блока. Метод `setCategoryColor` используется для определения цвета категории.
 
 #### Класс CardPreview
 Расширяет класс CardView. Данный класс служит для отображения карточки товара в модальном окне. Наследует все свойства и методы родительского класса, а также имеет метод `toggleButtonView` который меняет текст кнопки "В корзину"/"Убрать из корзины" в зависимости от наличии товара в корзине. 
@@ -200,6 +201,7 @@ interface IBasketView{
 В конструкторе принимает контейнер и EvenEmmiter.
 Класс внутри конструктора объявляет: список товаров `_list`, общую сумму `_total` и кнопку оформления `_button`, на которую сразу вешается слушаетель, который при клике генерирует событие `order:open` - открытие модального окна с оформлением заказа.\
 Методы, реализуемые классом:
+- `toggleButton(state: boolean)` - именяет статус блокировки кнопки;
 - `set items(items: HTMLElement[])` - устанавливается список товаров;
 - `set total(total: number)` - устанавливается сумма товаров к ворзине.
 
@@ -241,7 +243,7 @@ interface IBasketView{
   Интерфейс класса:
   
   ```
-    type ProductBasket = Pick <IProduct,	'id' | 'title' | 'price'>;
+    type ProductBasket = Pick <IProduct,	'id' | 'title' | 'index' | 'price'>;
   ```
   Данные о продуктах в корзине представлены массивом: `IProductBasket[]`
 
@@ -307,6 +309,7 @@ interface IBasketView{
 	category: CategoryOptions;
 	price: number | null;
 	isAddedToBasket?: boolean;
+  index: number;
 }
 ```
 #### interface ICatalogData
@@ -334,9 +337,9 @@ interface ICatalogData {
  type CategoryOptions = 'софт-скил'	| 'другое' | 'дополнительное'	| 'кнопка'	| 'хард-скил';
  ```
 #### interface IProduct
-Тип, описывающий данные карточки на странички Превью
+Тип, описывающий данные карточки в корзине
 ```
- type ProductBasket = Pick <IProduct,	'id' | 'title' | 'price' | 'isAddedToBasket'>;
+ type ProductBasket = Pick <IProduct,	'id' | 'title' | 'price' | 'index' |'isAddedToBasket'>;
  ```
 #### interface IOrderContact
 Интерфейс хранения информации о электронной почты и номера телефона:

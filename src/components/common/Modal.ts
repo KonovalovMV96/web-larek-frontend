@@ -31,7 +31,6 @@ export class Modal extends Component<IModalData> {
     }
 
     close() {
-        console.dir(this)
         this.toggleClass(this.container, 'modal_active', false);
         this.content = null;
         this.events.emit('modal:close');
